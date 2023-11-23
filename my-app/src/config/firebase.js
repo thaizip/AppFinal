@@ -2,34 +2,18 @@
 import { initializeApp } from "firebase/app";
 // retirar não vamos utilizar
 // import { getAnalytics } from "firebase/analytics";
-import AsyncStorage from "@react-native-async-storage/async-storage"
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { initializeAuth, getReactNativePersistence } from "firebase/auth";
 
-import {
-  APIKEY,
-  AUTH_DOMAIN,
-  PROJECT_ID,
-  STORARE_BUCKET,
-  MESSAGING_SENDER_ID,
-  APP_ID,
-  MEASUREMENT_ID,
-} from "@env"
-
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: APIKEY,
-  authDomain: AUTH_DOMAIN,
-  projectId: PROJECT_ID,
-  storageBucket: STORARE_BUCKET,
-  messagingSenderId: MESSAGING_SENDER_ID,
-  appId: APP_ID,
-  measurementId: MEASUREMENT_ID
+  apiKey: "AIzaSyAjuW92XJK44TJ_mDs5D44e_CPd8s81j1A",
+  authDomain: "mobilefinal-5e86b.firebaseapp.com",
+  projectId: "mobilefinal-5e86b",
+  storageBucket: "mobilefinal-5e86b.appspot.com",
+  messagingSenderId: "224510939116",
+  appId: "1:224510939116:web:0d8aea35d88b80017efac9",
+  measurementId: "G-WNB5MKV34F"
 };
 
 // Initialize Firebase

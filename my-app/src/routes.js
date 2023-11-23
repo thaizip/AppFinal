@@ -1,18 +1,89 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { Ionicons } from '@expo/vector-icons';
+import { View, Text, StatusBar, TouchableWithoutFeedback } from 'react-native';
+
 import Login from './screens/login';
-import Cadastro from  './screens/cadastro'; 
+import Cadastro from './screens/cadastro';
+import Localizar from './screens/localizar'
 
-const Menu = createNativeStackNavigator();
+const Tab = createMaterialTopTabNavigator();
 
-export default function Rotas() {
+const CustomTabBar = ({ state, descriptors, navigation }) => {
+  const icons = {
+    Login: 'log-in',
+    Cadastro: 'person-add',
+    Localizar: 'location'
+  };
+
+  return (
+    <View style={{ flexDirection: 'row', backgroundColor: '#F0F2EB', marginTop: StatusBar.currentHeight || 0, height: 60, marginTop: 30 }}>
+      {state.routes.map((route, index) => {
+        const { options } = descriptors[route.key];
+        const label =
+          options.tabBarLabel !== undefined
+            ? options.tabBarLabel
+            : options.title !== undefined
+            ? options.title
+            : route.name;
+
+        const isFocused = state.index === index;
+
+        const onPress = () => {
+          const event = navigation.emit({
+            type: 'tabPress',
+            target: route.key,
+            canPreventDefault: true,
+          });
+
+          if (!isFocused && !event.defaultPrevented) {
+            navigation.navigate(route.name);
+          }
+        };
+
+        const onLongPress = () => {
+          navigation.emit({
+            type: 'tabLongPress',
+            target: route.key,
+          });
+        };
+
+        const iconName = icons[label] || 'ios-person'; // Usará 'ios-person' se não houver ícone correspondente
+
+        return (
+          <TouchableWithoutFeedback
+            key={index}
+            onPress={onPress}
+            onLongPress={onLongPress}
+          >
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              <Ionicons name={iconName} size={24} color={isFocused ? '#8CBEAA' : 'gray'} />
+              <Text style={{ color: isFocused ? '#8CBEAA' : 'gray' }}>{label}</Text>
+            </View>
+          </TouchableWithoutFeedback>
+        );
+      })}
+    </View>
+  );
+};
+
+const Rotas = () => {
   return (
     <NavigationContainer>
-      <Menu.Navigator>
-        <Menu.Screen name="Login" component={Login} options={{ headerShown: false }}/>
-        <Menu.Screen name="Cadastro" component={Cadastro}  />
-      </Menu.Navigator>
+      <Tab.Navigator
+        tabBar={props => <CustomTabBar {...props} />}
+        tabBarOptions={{
+          showIcon: true,
+          indicatorStyle: { backgroundColor: 'green' },
+        }}
+      >
+        <Tab.Screen name="Login" component={Login} />
+        <Tab.Screen name="Cadastro" component={Cadastro} />
+        <Tab.Screen name="Localizar" component={Localizar} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
-}
+};
+
+export default Rotas;

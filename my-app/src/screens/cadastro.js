@@ -1,7 +1,7 @@
-import React,{useState,useEffect} from "react";
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet,TextInput, TouchableOpacity, onChangeText} from "react-native";
-// import { cadastrar } from '../service/reqFirebase'
-// import { createUserWithEmailAndPassword } from "firebase/auth";
+import { cadastrar } from '../service/reqFirebase';
+// import {createUserWithEmailAndPassword} from "firebase/auth";
 
 import * as Animatable from 'react-native-animatable';
 
@@ -24,12 +24,12 @@ export default function Cadastrar({navigation}){
     //     })
     //   })
     
-    //   async function realizarCadastro(){
-    //     await cadastrar(email, senha, confirmaSenha);
-    //     setEmail('')
-    //     setSenha('')
-    //     setConfirmaSenha('')
-    //   }
+      async function realizarCadastro(){
+        await cadastrar(email, senha, confSenha );
+        setEmail('')
+        setSenha('')
+        setConfSenha('')
+      }
     
 
     return (
@@ -59,12 +59,12 @@ export default function Cadastrar({navigation}){
                 <TextInput
                 placeholder="Confirme sua Senha"
                 value={confSenha}
-                onChangeText={text => setSenha(text)}
+                onChangeText={text => setConfSenha(text)}
                 style={style.input}
                 
                />
                 
-                <TouchableOpacity style={style.button}>
+                <TouchableOpacity style={style.button} onPress={() => realizarCadastro()}>
                     <Text style={style.buttonText}>Cadastrar</Text>
                 </TouchableOpacity>
                 
@@ -84,7 +84,7 @@ const style = StyleSheet.create({
     },
     containerHeader:{
         marginTop: '14%',
-        marginBottom: '30%',
+        marginBottom: '10%',
         paddingStart: '5%'
     },
     titulo:{
