@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet,TextInput, TouchableOpacity, onChangeText} from "react-native";
 import { cadastrar } from '../service/reqFirebase';
 // import {createUserWithEmailAndPassword} from "firebase/auth";
@@ -11,19 +11,6 @@ export default function Cadastrar({navigation}){
     const [senha, setSenha] = useState('');
     const [confSenha, setConfSenha ] = useState('');
 
-    // useEffect(()=>{
-    //     createUserWithEmailAndPassword(auth, "teste2@gmail.com", "12345678", null)
-    //     .then((dadosUsuario)=>{
-    //       console.log(dadosUsuario);
-    //     })
-    //     .catch((error)=>{
-    //       const errorCode = error.code;
-    //       const erroMessage = error.message;
-    //       console.log(error);
-    //       // ...
-    //     })
-    //   })
-    
       async function realizarCadastro(){
         await cadastrar(email, senha, confSenha );
         setEmail('')
