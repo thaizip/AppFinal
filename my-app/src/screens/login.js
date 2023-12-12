@@ -1,40 +1,58 @@
-import React,{useState} from "react";
-import { View, Text, StyleSheet,TextInput, TouchableOpacity, onChangeText} from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, showPassword } from "react-native";
 import * as Animatable from 'react-native-animatable';
+import { logar } from '../service/reqFirebase';
+import { AntDesign } from '@expo/vector-icons';
 
-export default function Login({navigation}){
+
+export default function Login({ navigation }) {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
 
+    async function realizarLogin() {
+        try {
+            await logar(email, senha);
+            setEmail('');
+            setSenha('');
+        } catch (error) {
+            console.error('Erro durante o login:', error);
+        }
+    }
 
     return (
         <View style={style.container}>
             <Animatable.View animation="fadeInLeft" delay={500} style={style.containerHeader}>
-            <Text style={style.titulo}>Bem - Vindo !</Text>
+                <Text style={style.titulo}>Bem - Vindo !</Text>
             </Animatable.View>
 
             <Animatable.View animation="fadeInUp" style={style.containerForm}>
-               <Text style={style.label}>E-mail</Text>
-               <TextInput
-                placeholder="Digite seu E-mail"
-                value={email}
-                onChangeText={text => setEmail(text)}
-                style={style.input}
-               />
+                <Text style={style.label}>E-mail</Text>
+                <TextInput
+                    placeholder="Digite seu E-mail"
+                    value={email}
+                    onChangeText={text => setEmail(text)}
+                    style={style.input}
+                    accessible={true}
+                    accessibilityLabel="E-mail"
+                />
+
 
                 <Text style={style.label}>Senha</Text>
                 <TextInput
-                placeholder="Digite sua Senha"
-                value={senha}
-                onChangeText={text => setSenha(text)}
-                style={style.input}
-               />
-                
-                <TouchableOpacity style={style.button}>
+                    placeholder="Digite sua Senha"
+                    value={senha}
+                    onChangeText={text => setSenha(text)}
+                    style={style.input}
+                    secureTextEntry={!showPassword}
+                    accessible={true}
+                    accessibilityLabel="Senha"
+                />
+
+                <TouchableOpacity style={style.button} onPress={() => realizarLogin()}>
                     <Text style={style.buttonText}>Acessar</Text>
                 </TouchableOpacity>
-                
-                    <TouchableOpacity style={style.buttonCadastro} onPress={() => {navigation.navigate('Cadastro')}}>
+
+                <TouchableOpacity style={style.buttonCadastro} onPress={() => navigation.navigate('Cadastro')}>
                     <Text> Ainda não possui conta? Cadastra-se </Text>
                 </TouchableOpacity>
 
@@ -44,54 +62,55 @@ export default function Login({navigation}){
 }
 
 const style = StyleSheet.create({
-    container:{
-        flex:1, 
+    container: {
+        flex: 1,
         backgroundColor: '#8CBEAA'
     },
-    containerHeader:{
+    containerHeader: {
         marginTop: '14%',
-        marginBottom: '50%',
+        marginBottom: '20%',
         paddingStart: '5%'
     },
-    titulo:{
+    titulo: {
         fontSize: 30,
         fontWeight: 'bold',
         color: '#F0F2EB'
     },
-    containerForm:{
-        backgroundColor: '#F0F2EB', 
-        flex:1,
+    containerForm: {
+        backgroundColor: '#F0F2EB',
+        flex: 1,
         borderTopLeftRadius: 30,
-        borderTopRightRadius: 30, 
+        borderTopRightRadius: 30,
         paddingStart: '5%',
-        paddingEnd: '5%'
+        paddingEnd: '5%',
+
     },
-    label:{
+    label: {
         fontSize: 20,
         marginTop: 28
-    }, 
-    input:{
-        borderBottomWidth: 1 ,
-        height: 40, 
+    },
+    input: {
+        borderBottomWidth: 1,
+        height: 40,
         marginBottom: 12,
         fontSize: 16
     },
-    button:{
+    button: {
         backgroundColor: '#8CBEAA',
         width: '100%',
-        borderRadius: 4, 
-        paddingVertical: 8, 
+        borderRadius: 4,
+        paddingVertical: 8,
         marginTop: 14,
         justifyContent: 'center',
-        alignItems:'center'
-    }, 
-    buttonText:{
+        alignItems: 'center'
+    },
+    buttonText: {
         color: '#F0F2EB',
         fontSize: 20,
         fontWeight: 'bold'
     },
-    buttonCadastro:{
-        marginTop: 14, 
+    buttonCadastro: {
+        marginTop: 14,
         alignSelf: 'center'
     }
 })

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet,TextInput, TouchableOpacity, onChangeText} from "react-native";
+import { View, Text, StyleSheet,TextInput, TouchableOpacity,showPassword} from "react-native";
 import { cadastrar } from '../service/reqFirebase';
 // import {createUserWithEmailAndPassword} from "firebase/auth";
 
@@ -36,20 +36,26 @@ export default function Cadastrar({navigation}){
 
                 <Text style={style.label}>Senha</Text>
                 <TextInput
-                placeholder="Digite sua Senha"
-                value={senha}
-                onChangeText={text => setSenha(text)}
-                style={style.input}
-               />
+                    placeholder="Digite sua Senha"
+                    value={senha}
+                    onChangeText={text => setSenha(text)}
+                    style={style.input}
+                    secureTextEntry={!showPassword}
+                    accessible={true}
+                    accessibilityLabel="Senha"
+                />
 
                 <Text style={style.label}>Confirmar Senha</Text>
-                <TextInput
-                placeholder="Confirme sua Senha"
-                value={confSenha}
-                onChangeText={text => setConfSenha(text)}
-                style={style.input}
-                
-               />
+                 <TextInput
+                    placeholder="Confirmar Senha"
+                    value={senha}
+                    onChangeText={text => setSenha(text)}
+                    style={style.input}
+                    secureTextEntry={!showPassword}
+                    accessible={true}
+                    accessibilityLabel="Senha"
+                />
+
                 
                 <TouchableOpacity style={style.button} onPress={() => realizarCadastro()}>
                     <Text style={style.buttonText}>Cadastrar</Text>
